@@ -35,6 +35,7 @@ Texture2D* GifBase::createTexture(Bitmap* bm, int index, bool getCache)
         //Adding texture to CCTextureCache  to ensure that on the Android platform, when cut into the foreground from the background, the VolatileTexture can reload our texture
 		texture = textureCache->addImage(img, textureName.c_str());
 	} while (0);
-
+    
+    CC_SAFE_RELEASE(img);
 	return texture;
 }
