@@ -8,6 +8,7 @@ The cocos2dx version number is 2.2.0
 
 ##Use 
 `Gif widget` just like a `Sprite`:
+
 	std::string name = "g1.gif";
 	name = FileUtils::getInstance()->fullPathForFilename(name.c_str());
 	GifBase *gif = InstantGif::create(name.c_str());//InstantGif ：While playing, while parsing
