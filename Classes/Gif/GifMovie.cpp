@@ -190,7 +190,7 @@ static void fillRect(Bitmap* bm, GifWord left, GifWord top, GifWord width, GifWo
  
 	for (; copyHeight > 0; copyHeight--)
 	{
-		for(int wIndex = 0; wIndex < bmWidth; wIndex++, dst++)
+		for(int wIndex = 0; wIndex < copyWidth; wIndex++, dst++)
 		{
 			*dst = col;
 		}
