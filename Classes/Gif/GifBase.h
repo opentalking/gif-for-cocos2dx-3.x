@@ -24,7 +24,17 @@ public:
 	{
 		return m_gif_fullpath;
 	};
-
+	
+	bool fileEndWithGif( const char* filename )
+	{
+		int nLen = strlen(filename);
+		if (nLen < 4) return false;
+		if (filename[nLen - 4] != '.') return false;
+		if (filename[nLen - 3] != 'g' && filename[nLen - 3] != 'G') return false;
+		if (filename[nLen - 2] != 'i' && filename[nLen - 3] != 'I') return false;
+		if (filename[nLen - 1] != 'f' && filename[nLen - 3] != 'F') return false;
+		return true;
+	}
 protected:
 	std::string m_gif_fullpath;;
 };
