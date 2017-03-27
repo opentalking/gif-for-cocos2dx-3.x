@@ -94,4 +94,17 @@ void HelloWorld::CreateGif(void)
 	gif = CacheGifData::create("g1.gif");
 	gif->setPosition(960, 160);
 	addChild(gif);
+	
+	GIFMovieData* movie = new GIFMovieData;
+	movie->init("g1.gif");
+	Sprite* pImg = Sprite::create();
+	pImg->initWithTexture(movie->GetTexture( 0 ));
+	pImg->setPosition(428, 320);
+	addChild(pImg);
+	delete movie;
+
+	pImg = Sprite::create();
+	pImg->initWithTexture(GIFMovieData::StaticGetTexture("g1.gif", 0));
+	pImg->setPosition( 856, 320);
+	addChild(pImg);
 }
