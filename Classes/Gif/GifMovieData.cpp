@@ -1,6 +1,5 @@
 #include "cocos2d.h"
 #include "GIFMovieData.h"
-#include "cocos2d.h"
 USING_NS_CC;
 
 static void packARGB32(Rgba* pixel, GifByteType alpha, GifByteType red,
@@ -45,16 +44,62 @@ bool GIFMovieData::init( const char* file)
 
 	if (NULL == fGIF || DGifSlurp(fGIF) != GIF_OK)
 	{
-		m_FileData.ReleaseData();
+		DGifCloseFile(fGIF);
 		fGIF = NULL;
 		return false;
 	}
 	return true;
 }
 
+cocos2d::Texture2D* GIFMovieData::GetTexture( int index )
+{
+	uint32_t dur = duration();
+	int nCount = getGifCount();
+	if (index < 0)
+		index = 0;
+	if (index > nCount)
+		index = nCount;
+	uint32_t oldTime = getTime();
+	setTime(dur / (float)nCount * index);
+
+	Bitmap* btmp = bitmap();
+	Image* pImg = new Image;
+	pImg->autorelease();
+	pImg->initWithRawData((unsigned char *)btmp->getRGBA(), btmp->getPixelLenth(), btmp->m_width, btmp->m_hight, 8);
+	Texture2D* texture = new Texture2D;
+	texture->autorelease();
+	texture->initWithImage(pImg);
+
+	setTime(oldTime);
+	return texture;
+}
+
+cocos2d::Texture2D* GIFMovieData::StaticGetTexture( const char* file, int index )
+{
+	GIFMovieData* movie = GIFMovieData::create(file);
+	uint32_t dur = movie->duration();
+	int nCount = movie->getGifCount();
+	if (index < 0)
+		index = 0;
+	if (index > nCount)
+		index = nCount;
+	movie->setTime( dur / (float)nCount * index );
+
+	Bitmap* btmp = movie->bitmap();
+	Image* pImg = new Image;
+	pImg->autorelease();
+	pImg->initWithRawData((unsigned char *)btmp->getRGBA(), btmp->getPixelLenth(), btmp->m_width, btmp->m_hight, 8);
+	Texture2D* texture = new Texture2D;
+	texture->autorelease();
+	texture->initWithImage(pImg);
+
+	delete movie;
+	return texture;
+}
+
 GIFMovieData::~GIFMovieData()
 {
-	m_FileData.ReleaseData();
+
 }
  
 static uint32_t savedimage_duration(const SavedImage* image)

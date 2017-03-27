@@ -7,6 +7,7 @@
 #include <string.h>
 #include <assert.h>
 #include "GifUtils.h"
+#include "cocos2d.h"
 #include "../Tools/FileData.h"
 
 class GIFMovieData : public Movie {
@@ -15,6 +16,9 @@ public:
 	GIFMovieData();
 	CREATE_WITH_PARAM(GIFMovieData, const char*);
     virtual bool init(const char*);
+
+	cocos2d::Texture2D* GetTexture(int index = 0);
+	static cocos2d::Texture2D* StaticGetTexture( const char* file, int index = 0 );
 
 	int getGifCount()
 	{
