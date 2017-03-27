@@ -1,7 +1,11 @@
 #include "HelloWorldScene.h"
+#include "SimpleAudioEngine.h"
 #include "Gif/GIFMovie.h"
 #include "Gif/CacheGif.h"
+#include "Gif/CacheGifData.h"
 #include "Gif/InstantGif.h"
+#include "Gif/InstantGifData.h"
+#include "GridItemPos.h"
 
 USING_NS_CC;
 
@@ -13,29 +17,29 @@ USING_NS_CC;
 
 Scene* HelloWorld::createScene()
 {
-    // 'scene' is an autorelease object
-    Scene *scene = Scene::create();
-    
-    // 'layer' is an autorelease object
-    HelloWorld *layer = HelloWorld::create();
+	// 'scene' is an autorelease object
+	Scene *scene = Scene::create();
 
-    // add layer as a child to scene
-    scene->addChild(layer);
+	// 'layer' is an autorelease object
+	HelloWorld *layer = HelloWorld::create();
 
-    // return the scene
-    return scene;
+	// add layer as a child to scene
+	scene->addChild(layer);
+
+	// return the scene
+	return scene;
 }
 
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !CCLayer::init() )
-    {
-        return false;
-    }
-      
+	//////////////////////////////
+	// 1. super init first
+	if (!CCLayer::init())
+	{
+		return false;
+	}
+
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Point origin = Director::getInstance()->getVisibleOrigin();
 
@@ -44,70 +48,50 @@ bool HelloWorld::init()
 	//    you may modify it.
 
 	// add a "close" icon to exit the progress. it's an autorelease object
-    MenuItemImage *pCloseItem = MenuItemImage::create(
+	MenuItemImage *pCloseItem = MenuItemImage::create(
 		"CloseNormal.png",
 		"CloseSelected.png",
-        CC_CALLBACK_1(HelloWorld::menuCloseCallback,this)
-                      );
+		CC_CALLBACK_1(HelloWorld::menuCloseCallback, this)
+	);
 
-	pCloseItem->setPosition(Point(origin.x + visibleSize.width - pCloseItem->getContentSize().width/2 ,
-		origin.y + pCloseItem->getContentSize().height/2));
+	pCloseItem->setPosition(Point(origin.x + visibleSize.width - pCloseItem->getContentSize().width / 2,
+		origin.y + pCloseItem->getContentSize().height / 2));
 
 	// create menu, it's an autorelease object
 	Menu* pMenu = Menu::create(pCloseItem, NULL);
-	pMenu->setPosition(Point(0,0));
+	pMenu->setPosition(Point(0, 0));
 	this->addChild(pMenu, 1);
 
-    return true;
+	CreateGif();
+
+	return true;
 }
 
-int count = 1;
 void HelloWorld::update(float delta)
 {
-	count++ ;
-	if(count > 240)
-	{
-		this->removeAllChildren();
-	}
 }
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
-    count++;
-	while(this->getChildByTag(1000))
-	{
-		this->removeChildByTag(1000);
-	}
-    log("%s","------after remove gif-----------");
-    std::string info = Director::getInstance()->getTextureCache()->getCachedTextureInfo();
-    log("%s",info.c_str());
-	if(count % 2 != 0)
-    {
-        return ;
-    }
-	std::string name = CCString::createWithFormat(FILE_FORMAT,count/2)->getCString();
-	name = FileUtils::getInstance()->fullPathForFilename(name.c_str());
-    
-	GifBase *gif = InstantGif::create(name.c_str());
-	if(gif == NULL)
-	{
-        CCLOG("%s","create gif failed");
-		return ;
-	}
-	gif->setAnchorPoint(Point(0,0));
-	this->addChild(gif);
-	gif->setPosition(Point(0,0));
-	gif->setTag(1000);
+	Director::getInstance()->end();
+}
 
+void HelloWorld::CreateGif(void)
+{
+	std::string name = FileUtils::getInstance()->fullPathForFilename( "g1.gif" );
+	GifBase* gif = InstantGif::create( name.c_str() );
+	gif->setPosition(320, 480);
+	addChild(gif);
 
 	gif = CacheGif::create(name.c_str());
-	gif->setAnchorPoint(Point(0,0));
-	this->addChild(gif);
-	gif->setPosition(Point(500,0));
-	gif->setScale(2);
-	gif->setTag(1000);
-	log("%s","------after add gif-----------");
-    info = Director::getInstance()->getTextureCache()->getCachedTextureInfo();
-    log("%s",info.c_str());
-	return ;
+	gif->setPosition(320, 160);
+	addChild(gif);
+
+	gif = InstantGifData::create( "g1.gif" );
+	gif->setPosition( 960, 480);
+	addChild(gif);
+
+	gif = CacheGifData::create("g1.gif");
+	gif->setPosition(960, 160);
+	addChild(gif);
 }

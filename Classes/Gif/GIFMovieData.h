@@ -8,7 +8,7 @@
 #include <assert.h>
 #include "GifUtils.h"
 #include "cocos2d.h"
-#include "../Tools/FileData.h"
+#include "FileData.h"
 
 class GIFMovieData : public Movie {
 public:
