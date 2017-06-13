@@ -19,6 +19,7 @@ public:
         redraw).
     */
     bool setTime(uint32_t);
+	uint32_t getTime( void );
 
 	bool appendTime(uint32_t time);
 

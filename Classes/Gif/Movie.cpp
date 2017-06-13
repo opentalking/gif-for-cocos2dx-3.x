@@ -56,6 +56,11 @@ bool Movie::setTime(uint32_t time)
     return changed;
 }
 
+uint32_t Movie::getTime(void)
+{
+	return fCurrTime;
+}
+
 bool Movie::appendTime(uint32_t time)
 {
 	uint32_t allTime = fCurrTime + time;
