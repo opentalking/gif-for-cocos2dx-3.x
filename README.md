@@ -1,4 +1,4 @@
-##A gif lib for cocos2dx-3.x
+## A gif lib for cocos2dx-3.x
 ===================
 
 This project is based on the gif_lib, and some codes reference to the android skia.
@@ -6,7 +6,7 @@ In my project, gif_lib library version is 5, and there are some changes to adapt
 The cocos2dx version number is 2.2.0 
 
 
-##Use 
+## Use 
 `Gif widget` just like a `Sprite`:
 
 	std::string name = "g1.gif";
@@ -41,7 +41,7 @@ limitations under the License.
     
 ```
 
-##Contact Me
+## Contact Me
 
  If you have any question, please contact with me.
  
