@@ -99,7 +99,8 @@ cocos2d::Texture2D* GIFMovieData::StaticGetTexture( const char* file, int index 
 
 GIFMovieData::~GIFMovieData()
 {
-
+	DGifCloseFile(fGIF);
+	fGIF = NULL;
 }
  
 static uint32_t savedimage_duration(const SavedImage* image)
